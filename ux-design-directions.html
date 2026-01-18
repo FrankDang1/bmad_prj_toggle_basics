@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UX Design Directions - bmad_project</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: "hsl(var(--primary))",
+                        "primary-foreground": "hsl(var(--primary-foreground))",
+                        muted: "hsl(var(--muted))",
+                        "muted-foreground": "hsl(var(--muted-foreground))",
+                        border: "hsl(var(--border))",
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-slate-900 h-screen overflow-hidden flex flex-col">
+
+    <!-- Toolbar -->
+    <div class="h-14 border-b bg-white flex items-center justify-between px-4 shrink-0 z-20 shadow-sm">
+        <div class="font-bold text-lg tracking-tight">bmad_project <span class="text-slate-400 font-normal">Design Variations</span></div>
+        <div class="flex gap-4 text-sm">
+            <button onclick="setMode('sidebar')" id="btn-sidebar" class="px-3 py-1.5 rounded bg-slate-100 hover:bg-slate-200 font-medium transition-colors border border-slate-200">Layout A: Sidebar</button>
+            <button onclick="setMode('topbar')" id="btn-topbar" class="px-3 py-1.5 rounded hover:bg-slate-100 font-medium transition-colors border border-transparent text-slate-600">Layout B: Topbar</button>
+            <div class="w-px h-6 bg-slate-200"></div>
+            <button onclick="setDensity('compact')" id="btn-compact" class="px-3 py-1.5 rounded bg-slate-100 hover:bg-slate-200 font-medium transition-colors border border-slate-200">Density: Compact</button>
+            <button onclick="setDensity('comfortable')" id="btn-comfortable" class="px-3 py-1.5 rounded hover:bg-slate-100 font-medium transition-colors border border-transparent text-slate-600">Density: Comfortable</button>
+        </div>
+    </div>
+
+    <!-- Main Viewport -->
+    <div id="viewport" class="flex-1 flex overflow-hidden relative transition-all duration-300">
+        
+        <!-- Sidebar (Layout A) -->
+        <div id="layout-sidebar" class="w-64 border-r bg-white flex flex-col shrink-0 transition-transform duration-300">
+            <div class="p-4">
+                <div class="h-8 w-8 bg-slate-900 rounded-lg mb-6"></div>
+                <div class="space-y-1">
+                    <div class="px-3 py-2 bg-slate-100 text-slate-900 rounded-md text-sm font-medium">Timeline</div>
+                    <div class="px-3 py-2 text-slate-500 hover:bg-slate-50 rounded-md text-sm font-medium">Projects</div>
+                    <div class="px-3 py-2 text-slate-500 hover:bg-slate-50 rounded-md text-sm font-medium">Team</div>
+                </div>
+            </div>
+            <div class="mt-auto p-4 border-t">
+                <div class="flex items-center gap-3">
+                    <div class="h-8 w-8 rounded-full bg-slate-200"></div>
+                    <div class="text-sm font-medium">Admin User</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Topbar (Layout B - Hidden by default) -->
+        <div id="layout-topbar" class="absolute top-0 left-0 w-full h-14 bg-white border-b flex items-center px-6 hidden z-10">
+            <div class="h-6 w-6 bg-slate-900 rounded-md mr-6"></div>
+            <div class="flex gap-6 text-sm font-medium">
+                <div class="text-slate-900">Timeline</div>
+                <div class="text-slate-500">Projects</div>
+                <div class="text-slate-500">Team</div>
+            </div>
+            <div class="ml-auto flex items-center gap-3">
+                 <div class="h-8 w-8 rounded-full bg-slate-200"></div>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="flex-1 bg-white flex flex-col min-w-0" id="main-content">
+            
+            <!-- Header -->
+            <div class="h-16 border-b flex items-center justify-between px-6 shrink-0 mt-0 transition-all duration-300" id="content-header">
+                <div>
+                    <h1 class="text-lg font-semibold tracking-tight text-slate-900">Website Redesign</h1>
+                    <div class="text-xs text-slate-500 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-green-500"></span> Live
+                        <span class="text-slate-300">|</span>
+                        Last updated 2m ago
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <button class="px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-50 border rounded-md">Share</button>
+                    <button class="px-3 py-1.5 text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-md shadow-sm">Add Task</button>
+                </div>
+            </div>
+
+            <!-- Timeline Grid -->
+            <div class="flex-1 overflow-auto bg-slate-50 relative">
+                <!-- Grid Background -->
+                <div class="min-w-[1200px] h-full bg-[linear-gradient(to_right,#e2e8f0,80px,transparent_1px),linear-gradient(to_bottom,#e2e8f0,40px,transparent_1px)] bg-[size:80px_40px]">
+                    
+                    <!-- Month Header -->
+                    <div class="flex border-b bg-white/95 backdrop-blur sticky top-0 z-10 h-10 items-center">
+                        <div class="w-20 pl-4 border-r"></div> <!-- Sidebar gutter -->
+                        <div class="flex-1 flex" id="date-header">
+                            <!-- JS will populate -->
+                        </div>
+                    </div>
+
+                    <!-- Swimlanes -->
+                    <div class="p-0 space-y-0" id="swimlanes">
+                        <!-- JS will populate -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dateHeader = document.getElementById('date-header');
+        const swimlanesContainer = document.getElementById('swimlanes');
+        let currentDensity = 'compact';
+        let currentLayout = 'sidebar';
+
+        const tasks = [
+            { name: "Discovery", start: 1, duration: 4, color: "bg-blue-200 border-blue-300 text-blue-700" },
+            { name: "Design", start: 6, duration: 8, color: "bg-purple-200 border-purple-300 text-purple-700" },
+            { name: "Dev", start: 15, duration: 10, color: "bg-pink-200 border-pink-300 text-pink-700" },
+            { name: "QA", start: 26, duration: 5, color: "bg-amber-200 border-amber-300 text-amber-700" }
+        ];
+
+        function renderGrid() {
+            // Render Header
+            let headerHTML = '';
+            for(let i=1; i<=30; i++) {
+                headerHTML += `<div class="w-20 shrink-0 text-xs text-slate-500 border-r py-2.5 text-center px-1">Oct ${i}</div>`;
+            }
+            dateHeader.innerHTML = headerHTML;
+
+            // Render Swimlanes
+            let lanesHTML = '';
+            const rowHeight = currentDensity === 'compact' ? 'h-10' : 'h-16';
+            const textSize = currentDensity === 'compact' ? 'text-xs' : 'text-sm';
+            
+            tasks.forEach(task => {
+                const width = task.duration * 80; // 80px per day
+                const left = (task.start - 1) * 80 + 80; // +80 for gutter
+                
+                lanesHTML += `
+                <div class="${rowHeight} border-b bg-white relative hover:bg-slate-50 group transition-all duration-300">
+                    <div class="absolute top-0 bottom-0 w-20 border-r bg-white/50 backdrop-blur z-9"></div>
+                    
+                    <div class="absolute top-1 bottom-1 rounded-md ${task.color} border shadow-sm flex items-center px-2 cursor-grab active:cursor-grabbing hover:brightness-95 transition-all"
+                         style="left: ${left}px; width: ${width}px;">
+                        <span class="${textSize} font-medium truncate">${task.name}</span>
+                        
+                        <!-- Drag Handle Mockup -->
+                        <div class="absolute right-0 top-0 bottom-0 w-2 cursor-e-resize hover:bg-black/10 rounded-r-md"></div>
+                         <div class="absolute left-0 top-0 bottom-0 w-2 cursor-w-resize hover:bg-black/10 rounded-l-md"></div>
+                    </div>
+                </div>`;
+            });
+
+            // Empty lanes
+            for(let i=0; i<8; i++) {
+                 lanesHTML += `<div class="${rowHeight} border-b bg-white relative hover:bg-slate-50 transition-all duration-300"><div class="absolute top-0 bottom-0 w-20 border-r"></div></div>`;
+            }
+
+            swimlanesContainer.innerHTML = lanesHTML;
+        }
+
+        function setMode(mode) {
+            currentLayout = mode;
+            const sidebar = document.getElementById('layout-sidebar');
+            const topbar = document.getElementById('layout-topbar');
+            const header = document.getElementById('content-header');
+            const mainContent = document.getElementById('main-content'); // Fix: Get the content div
+
+            // Reset buttons
+            document.getElementById('btn-sidebar').className = "px-3 py-1.5 rounded hover:bg-slate-100 font-medium transition-colors border border-transparent text-slate-600";
+            document.getElementById('btn-topbar').className = "px-3 py-1.5 rounded hover:bg-slate-100 font-medium transition-colors border border-transparent text-slate-600";
+            
+            // Set active button
+            const activeBtn = document.getElementById(`btn-${mode}`);
+            activeBtn.className = "px-3 py-1.5 rounded bg-slate-100 hover:bg-slate-200 font-medium transition-colors border border-slate-200 text-slate-900";
+
+            if (mode === 'sidebar') {
+                sidebar.style.display = 'flex';
+                // Wait next tick for animation
+                setTimeout(() => sidebar.style.width = '16rem', 10);
+                setTimeout(() => sidebar.style.opacity = '1', 10);
+                
+                topbar.classList.add('hidden');
+                header.classList.remove('mt-14');
+            } else {
+                sidebar.style.width = '0';
+                sidebar.style.opacity = '0';
+                setTimeout(() => sidebar.style.display = 'none', 300);
+
+                topbar.classList.remove('hidden');
+                header.classList.add('mt-14');
+            }
+        }
+
+        function setDensity(density) {
+            currentDensity = density;
+             // Reset buttons
+            document.getElementById('btn-compact').className = "px-3 py-1.5 rounded hover:bg-slate-100 font-medium transition-colors border border-transparent text-slate-600";
+            document.getElementById('btn-comfortable').className = "px-3 py-1.5 rounded hover:bg-slate-100 font-medium transition-colors border border-transparent text-slate-600";
+             // Set active button
+            const activeBtn = document.getElementById(`btn-${density}`);
+            activeBtn.className = "px-3 py-1.5 rounded bg-slate-100 hover:bg-slate-200 font-medium transition-colors border border-slate-200 text-slate-900";
+            
+            renderGrid();
+        }
+
+        // Init
+        renderGrid();
+    </script>
+</body>
+</html>
